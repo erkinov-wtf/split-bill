@@ -5,3 +5,5 @@ logger-level: debug
 is-testing: false
 
 server-port: 8080
+
+dbconnection: 'postgresql://postgres:postgres@service-postgres:5432/postgres'
