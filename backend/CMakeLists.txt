@@ -5,18 +5,28 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(DownloadUserver)
 
 find_package(userver COMPONENTS core postgresql QUIET)
-if(NOT userver_FOUND)
-  # Tries TRY_DIR first, falls back to downloading userver from GitHub using CPM.
-  download_userver(TRY_DIR third_party/userver)
-endif()
+if (NOT userver_FOUND)
+    # Tries TRY_DIR first, falls back to downloading userver from GitHub using CPM.
+    download_userver(TRY_DIR third_party/userver)
+endif ()
 
 userver_setup_environment()
 
 
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
-    src/hello.hpp
-    src/hello.cpp
+        src/models/session.hpp
+        src/models/user.hpp
+
+
+        src/handlers/lib/auth.cpp
+        src/handlers/lib/auth.hpp
+
+
+        src/handlers/v1/login/view.cpp
+        src/handlers/v1/login/view.hpp
+        src/handlers/v1/register/view.cpp
+        src/handlers/v1/register/view.hpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 
@@ -26,17 +36,8 @@ add_executable(${PROJECT_NAME} src/main.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_objs)
 
 
-# Unit Tests
-add_executable(${PROJECT_NAME}_unittest
-    src/hello_test.cpp
-)
-target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs userver::utest)
-add_google_tests(${PROJECT_NAME}_unittest)
-
-
 # Benchmarks
 add_executable(${PROJECT_NAME}_benchmark
-    src/hello_benchmark.cpp
 )
 target_link_libraries(${PROJECT_NAME}_benchmark PRIVATE ${PROJECT_NAME}_objs userver::ubench)
 add_google_benchmark_tests(${PROJECT_NAME}_benchmark)
@@ -49,11 +50,11 @@ userver_testsuite_add_simple()
 # Install
 include(GNUInstallDirs)
 
-if(DEFINED ENV{PREFIX})
-  message(STATUS "Set install prefix: $ENV{PREFIX}")
-  file(TO_CMAKE_PATH "$ENV{PREFIX}" PREFIX_PATH)
-  set(CMAKE_INSTALL_PREFIX ${PREFIX_PATH})
-endif()
+if (DEFINED ENV{PREFIX})
+    message(STATUS "Set install prefix: $ENV{PREFIX}")
+    file(TO_CMAKE_PATH "$ENV{PREFIX}" PREFIX_PATH)
+    set(CMAKE_INSTALL_PREFIX ${PREFIX_PATH})
+endif ()
 
 file(GLOB CONFIGS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/configs/*.yaml ${CMAKE_CURRENT_SOURCE_DIR}/configs/*.json)
 
