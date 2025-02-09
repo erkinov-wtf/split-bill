@@ -1,20 +1,23 @@
-version: "2.3"
-
 services:
     postgres:
         container_name: service-postgres
-        image: postgres:12
+        image: postgres:17
         environment: &db_env
-          POSTGRES_DB: service_template_db_1
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         ports:
-          - 5432
+          - "5432:5432"
         volumes:
           - ./postgresql/schemas:/docker-entrypoint-initdb.d
           - ./.pgdata:/var/lib/postgresql/data
         networks:
           - postgres
+        healthcheck:
+          test: [ "CMD-SHELL", "pg_isready -U postgres -d postgres" ]
+          interval: 10s
+          retries: 5
+
 
     service_template-container:
         image: ghcr.io/userver-framework/ubuntu-22.04-userver-pg:latest
@@ -33,7 +36,8 @@ services:
         entrypoint:
           - ./tests/run_as_user.sh
         depends_on:
-          - postgres
+          postgres:
+            condition: service_healthy
         networks:
           - postgres
 

@@ -1,7 +1,7 @@
 PROJECT_NAME = service_template
 NPROCS ?= $(shell nproc)
 CLANG_FORMAT ?= clang-format
-DOCKER_COMPOSE ?= docker-compose
+DOCKER_COMPOSE ?= docker compose
 PRESETS ?= debug release debug-custom release-custom
 
 .PHONY: all
