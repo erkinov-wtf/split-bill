@@ -62,6 +62,24 @@ components_manager:
             method: POST
             task_processor: main-task-processor
 
+        # products endpoints
+        handler-v1-add-product:
+            path: /v1/products
+            method: POST
+            task_processor: main-task-processor
+        handler-v1-get-product:
+            path: /v1/products/{id}
+            method: GET
+            task_processor: main-task-processor
+        handler-v1-delete-product:
+            path: /v1/products/{id}
+            method: DELETE
+            task_processor: main-task-processor
+        handler-v1-get-products:
+            path: /v1/products
+            method: GET
+            task_processor: main-task-processor
+
         # endpoints END here
         postgres-db-1:
             dbconnection: $dbconnection
