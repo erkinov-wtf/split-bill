@@ -82,7 +82,7 @@ class GetUserProducts final
       return userver::formats::json::ToString(response.ExtractValue());
     }
 
-    userver::formats::json::ValueBuilder response;//TODO govnocode
+    userver::formats::json::ValueBuilder response;
     response["users"].Resize(0);
     for (const auto& row : result) {
       userver::formats::json::ValueBuilder user_entry;
