@@ -27,6 +27,38 @@ add_library(${PROJECT_NAME}_objs OBJECT
         src/handlers/v1/login/view.hpp
         src/handlers/v1/register/view.cpp
         src/handlers/v1/register/view.hpp
+
+
+        src/handlers/v1/products/filters.cpp
+        src/handlers/v1/products/filters.hpp
+        src/handlers/v1/products/add-product/view.cpp
+        src/handlers/v1/products/add-product/view.hpp
+        src/handlers/v1/products/delete-product/view.cpp
+        src/handlers/v1/products/delete-product/view.hpp
+        src/handlers/v1/products/get-product/view.cpp
+        src/handlers/v1/products/get-product/view.hpp
+        src/handlers/v1/products/get-products/view.cpp
+        src/handlers/v1/products/get-products/view.hpp
+
+
+        src/handlers/v1/rooms/filters.cpp
+        src/handlers/v1/rooms/filters.hpp
+        src/handlers/v1/rooms/create-room/view.cpp
+        src/handlers/v1/rooms/create-room/view.hpp
+        src/handlers/v1/rooms/get-all-rooms/view.cpp
+        src/handlers/v1/rooms/get-all-rooms/view.hpp
+        src/handlers/v1/rooms/get-created-rooms/view.cpp
+        src/handlers/v1/rooms/get-created-rooms/view.hpp
+        src/handlers/v1/rooms/get-room/view.cpp
+        src/handlers/v1/rooms/get-room/view.hpp
+        src/handlers/v1/rooms/get-room-user-prices/view.cpp
+        src/handlers/v1/rooms/get-room-user-prices/view.hpp
+        src/handlers/v1/rooms/get-room-users/view.cpp
+        src/handlers/v1/rooms/get-room-users/view.hpp
+        src/handlers/v1/rooms/join-room/view.cpp
+        src/handlers/v1/rooms/join-room/view.hpp
+        src/handlers/v1/rooms/update-room/view.cpp
+        src/handlers/v1/rooms/update-room/view.hpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 
