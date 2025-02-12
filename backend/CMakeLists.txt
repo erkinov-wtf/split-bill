@@ -15,8 +15,16 @@ userver_setup_environment()
 
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
+        src/models/detailed-room.cpp
+        src/models/detailed-room.hpp
+        src/models/product.cpp
+        src/models/product.hpp
+        src/models/room.cpp
+        src/models/room.hpp
         src/models/session.hpp
         src/models/user.hpp
+        src/models/user-product.cpp
+        src/models/user-product.hpp
 
 
         src/handlers/lib/auth.cpp
@@ -27,6 +35,50 @@ add_library(${PROJECT_NAME}_objs OBJECT
         src/handlers/v1/login/view.hpp
         src/handlers/v1/register/view.cpp
         src/handlers/v1/register/view.hpp
+
+
+        src/handlers/v1/products/filters.cpp
+        src/handlers/v1/products/filters.hpp
+        src/handlers/v1/products/add-product/view.cpp
+        src/handlers/v1/products/add-product/view.hpp
+        src/handlers/v1/products/delete-product/view.cpp
+        src/handlers/v1/products/delete-product/view.hpp
+        src/handlers/v1/products/get-product/view.cpp
+        src/handlers/v1/products/get-product/view.hpp
+        src/handlers/v1/products/get-products/view.cpp
+        src/handlers/v1/products/get-products/view.hpp
+
+
+        src/handlers/v1/rooms/filters.cpp
+        src/handlers/v1/rooms/filters.hpp
+        src/handlers/v1/rooms/create-room/view.cpp
+        src/handlers/v1/rooms/create-room/view.hpp
+        src/handlers/v1/rooms/get-all-rooms/view.cpp
+        src/handlers/v1/rooms/get-all-rooms/view.hpp
+        src/handlers/v1/rooms/get-created-rooms/view.cpp
+        src/handlers/v1/rooms/get-created-rooms/view.hpp
+        src/handlers/v1/rooms/get-room/view.cpp
+        src/handlers/v1/rooms/get-room/view.hpp
+        src/handlers/v1/rooms/get-room-user-prices/view.cpp
+        src/handlers/v1/rooms/get-room-user-prices/view.hpp
+        src/handlers/v1/rooms/get-room-users/view.cpp
+        src/handlers/v1/rooms/get-room-users/view.hpp
+        src/handlers/v1/rooms/join-room/view.cpp
+        src/handlers/v1/rooms/join-room/view.hpp
+        src/handlers/v1/rooms/update-room/view.cpp
+        src/handlers/v1/rooms/update-room/view.hpp
+
+
+        src/handlers/v1/user-products/filters.cpp
+        src/handlers/v1/user-products/filters.hpp
+        src/handlers/v1/user-products/add-user-to-product/view.cpp
+        src/handlers/v1/user-products/add-user-to-product/view.cpp
+        src/handlers/v1/user-products/get-user-product/view.hpp
+        src/handlers/v1/user-products/get-user-product/view.hpp
+        src/handlers/v1/user-products/get-user-products/view.hpp
+        src/handlers/v1/user-products/get-user-products/view.hpp
+        src/handlers/v1/user-products/update-user-product/view.hpp
+        src/handlers/v1/user-products/update-user-product/view.hpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 
