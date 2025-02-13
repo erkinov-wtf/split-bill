@@ -1,17 +1,18 @@
 import './App.css';
 import { Link, Route, Routes } from "react-router-dom";
-import Login from "./Pages/Login/join-room-page.jsx";
-import Onboarding from "./Pages/Login/join-room-page.jsx"; // Добавляем Onboarding
+import Login from "./pages/login/join-room-page1.jsx"; // Corrected the login page import
+import JoinRoom from "./pages/Login/join-room-page1.jsx";
 
 function App() {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Onboarding />} /> {/* Показываем Onboarding на главной */}
                 <Route path="/login" element={<Login />} />
+                <Route path="/join-room" element={<JoinRoom />} />
             </Routes>
 
             <Link to="/login">Login</Link>
+            <Link to="/join-room">Join Room</Link>
         </>
     );
 }
