@@ -1,18 +1,19 @@
-import './App.css'
-import Login from "./Pages/Login/index.jsx";
-import {Link, Route, Routes} from "react-router-dom";
+import './App.css';
+import { Link, Route, Routes } from "react-router-dom";
+import Login from "./Pages/Login/join-room-page.jsx";
+import Onboarding from "./Pages/Login/join-room-page.jsx"; // Добавляем Onboarding
 
 function App() {
+    return (
+        <>
+            <Routes>
+                <Route path="/" element={<Onboarding />} /> {/* Показываем Onboarding на главной */}
+                <Route path="/login" element={<Login />} />
+            </Routes>
 
-  return (
-    <>
-        <Routes>
-            <Route path="/login" element={<Login />} />
-        </Routes>
-        
-        <Link to="/login">Login</Link>
-    </>
-  )
+            <Link to="/login">Login</Link>
+        </>
+    );
 }
 
-export default App
+export default App;
