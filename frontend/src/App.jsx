@@ -1,18 +1,18 @@
 import './App.css'
-import Login from "./Pages/Login/index.jsx";
-import {Link, Route, Routes} from "react-router-dom";
+import Layout from "./components/Layout";
+
+const Home = () => {
+    return <div>
+      <p className="text-black"> Home Page Content</p>
+    </div>;
+};
 
 function App() {
-
-  return (
-    <>
-        <Routes>
-            <Route path="/login" element={<Login />} />
-        </Routes>
-        
-        <Link to="/login">Login</Link>
-    </>
-  )
+    return (
+        <Layout>
+            <Home />
+        </Layout>
+    );
 }
 
 export default App
