@@ -1,6 +1,7 @@
 import './App.css'
 import Login from "./Pages/Login/index.jsx";
 import {Link, Route, Routes} from "react-router-dom";
+import CreateExpense from "./pages/expense/createExpense.jsx";
 
 function App() {
 
@@ -8,8 +9,9 @@ function App() {
     <>
         <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/expense" element={<CreateExpense />} />
         </Routes>
-        
+
         <Link to="/login">Login</Link>
     </>
   )
