@@ -2,6 +2,7 @@ import './App.css'
 import {Link, Route, Routes} from "react-router-dom";
 import Layout from "./components/Layout";
 import Onboarding from "./pages/onboarding/index.jsx";
+import JoinRoomPage from "./pages/join-room/index.jsx";
 
 const Home = () => {
     return (
@@ -20,6 +21,7 @@ function App() {
 
             {/* All Other Pages (INSIDE Layout) */}
             <Route path="*" element={<Layout><Home /></Layout>} />
+            <Route path="/join" element={<Layout><JoinRoomPage /></Layout>} />
         </Routes>
     );
 }
