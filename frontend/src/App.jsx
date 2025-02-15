@@ -1,17 +1,26 @@
 import './App.css'
+import {Link, Route, Routes} from "react-router-dom";
 import Layout from "./components/Layout";
+import Onboarding from "./pages/onboarding/index.jsx";
 
 const Home = () => {
-    return <div>
-      <p className="text-black"> Home Page Content</p>
-    </div>;
+    return (
+        <div>
+            <p className="text-black">Home Page Content</p>
+            <Link to="/onboarding" className="text-blue-500 underline">Go to Onboarding</Link>
+        </div>
+    );
 };
 
 function App() {
     return (
-        <Layout>
-            <Home />
-        </Layout>
+        <Routes>
+            {/* Onboarding Page (OUTSIDE Layout) */}
+            <Route path="/onboarding" element={<Onboarding />} />
+
+            {/* All Other Pages (INSIDE Layout) */}
+            <Route path="*" element={<Layout><Home /></Layout>} />
+        </Routes>
     );
 }
 
