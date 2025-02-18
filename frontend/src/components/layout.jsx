@@ -3,7 +3,7 @@ import { Container, Grid, Avatar, Typography, Button, Divider } from "@mui/mater
 import { Bookmark, Groups, Newspaper, Event } from "@mui/icons-material";
 
 const UserInfo = () => (
-    <div className="bg-white text-black p-4 rounded-lg shadow">
+    <div className="bg-white text-black p-4 rounded-lg shadow sticky top-0">
         <div className="flex flex-col items-center text-center">
             <Avatar src="/profile.jpg" alt="User" className="w-24 h-24 mb-2 border-4 border-gray-300 rounded-full mx-auto" />
             <Typography variant="h6" className="font-semibold">Rakhmatilla Erkinov</Typography>
@@ -40,7 +40,7 @@ const UserInfo = () => (
 
 
 const ExtraContent = () => (
-    <div className="bg-white text-black p-4 rounded-lg shadow">
+    <div className="bg-white text-black p-4 rounded-lg shadow sticky top-0">
         <Typography variant="h6" className="font-semibold">Spending</Typography>
         <div className="flex justify-between items-center mt-2">
             <Typography variant="body2" className="text-gray-600">You Spent:</Typography>
