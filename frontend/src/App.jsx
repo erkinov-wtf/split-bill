@@ -6,6 +6,7 @@ import JoinRoomPage from "./pages/join-room/index.jsx";
 import UsersRoomPage from "./pages/all-users-rooms/UsersRooms.jsx";
 import CreateRoom from "./pages/create-room/index.jsx";
 import UpdateUserStatus from "./pages/update-user-status/index.jsx";
+import CreateExpense from "./pages/expence/createExpence.jsx";
 
 const Home = () => {
     return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/create" element={<Layout><CreateRoom /></Layout>} />
             <Route path="/rooms" element={<Layout><UsersRoomPage /></Layout>}/>
             <Route path="/update-status" element={<Layout><UpdateUserStatus /></Layout>} />
+            <Route path="/create-expence" element={<Layout><CreateExpense /></Layout>} />
         </Routes>
     );
 }
