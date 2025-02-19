@@ -22,11 +22,12 @@ function App() {
         <Routes>
             {/* Onboarding Page (OUTSIDE Layout) */}
             <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/login" element={<Login />} />
 
             {/* All Other Pages (INSIDE Layout) */}
             <Route path="*" element={<Layout><Home /></Layout>} />
             <Route path="/join" element={<Layout><JoinRoomPage /></Layout>} />
-            <Route path="/Login" element={<Layout><Login /></Layout>} />
+
 
             <Route path="/create" element={<Layout><CreateRoom /></Layout>} />
             <Route path="/rooms" element={<Layout><UsersRoomPage /></Layout>}/>
