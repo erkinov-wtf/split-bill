@@ -3,6 +3,7 @@ import {Link, Route, Routes} from "react-router-dom";
 import Layout from "./components/Layout";
 import Onboarding from "./pages/onboarding/index.jsx";
 import JoinRoomPage from "./pages/join-room/index.jsx";
+import Login from "./pages/login/index.jsx";
 import UsersRoomPage from "./pages/all-users-rooms/UsersRooms.jsx";
 import CreateRoom from "./pages/create-room/index.jsx";
 import UpdateUserStatus from "./pages/update-user-status/index.jsx";
@@ -25,6 +26,8 @@ function App() {
             {/* All Other Pages (INSIDE Layout) */}
             <Route path="*" element={<Layout><Home /></Layout>} />
             <Route path="/join" element={<Layout><JoinRoomPage /></Layout>} />
+            <Route path="/Login" element={<Layout><Login /></Layout>} />
+
             <Route path="/create" element={<Layout><CreateRoom /></Layout>} />
             <Route path="/rooms" element={<Layout><UsersRoomPage /></Layout>}/>
             <Route path="/update-status" element={<Layout><UpdateUserStatus /></Layout>} />
