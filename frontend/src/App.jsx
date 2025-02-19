@@ -4,6 +4,8 @@ import Layout from "./components/Layout";
 import Onboarding from "./pages/onboarding/index.jsx";
 import JoinRoomPage from "./pages/join-room/index.jsx";
 import Login from "./pages/login/index.jsx";
+import CreateRoom from "./pages/create-room/index.jsx";
+import UpdateUserStatus from "./pages/update-user-status/index.jsx";
 
 const Home = () => {
     return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/join" element={<Layout><JoinRoomPage /></Layout>} />
             <Route path="/Login" element={<Layout><Login /></Layout>} />
 
+            <Route path="/create" element={<Layout><CreateRoom /></Layout>} />
+            <Route path="/update-status" element={<Layout><UpdateUserStatus /></Layout>} />
         </Routes>
     );
 }
