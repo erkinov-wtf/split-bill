@@ -8,7 +8,7 @@ function Login() {
         <div className="flex items-center justify-center min-h-screen bg-white">
 
         <div className="w-96 p-6 bg-white rounded-2xl shadow-xl">
-                <h1 className="text-3xl font-bold text-gray-800">Login</h1>
+                <h3 className="text-4xl font-bold text-gray-800">Login</h3>
                 <p className="text-gray-600 mb-6">Welcome back!</p>
 
                 <label className="block text-gray-700 font-semibold">EMAIL</label>
@@ -18,7 +18,6 @@ function Login() {
                         placeholder="yourname@email.com"
                         className="w-full p-2 border rounded-lg pr-10 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
-                    <Check className="absolute right-3 top-3 text-green-500" />
                 </div>
 
                 <label className="block text-gray-700 font-semibold">PASSWORD</label>
