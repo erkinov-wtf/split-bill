@@ -16,6 +16,7 @@ const Home = () => {
         </div>
     );
 };
+import ExpenseApp from "./pages/empty-new-room/emptyNewRoom.jsx";
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/create" element={<Layout><CreateRoom /></Layout>} />
             <Route path="/rooms" element={<Layout><UsersRoomPage /></Layout>}/>
             <Route path="/update-status" element={<Layout><UpdateUserStatus /></Layout>} />
+            <Route path="/empty-new-room" element={<ExpenseApp />} />
         </Routes>
     );
 }
