@@ -7,6 +7,8 @@ import Login from "./pages/login/index.jsx";
 import UsersRoomPage from "./pages/all-users-rooms/UsersRooms.jsx";
 import CreateRoom from "./pages/create-room/index.jsx";
 import UpdateUserStatus from "./pages/update-user-status/index.jsx";
+import CreateExpense from "./pages/expence/createExpence.jsx";
+
 import Registration from "./pages/registration/index.jsx";
 const Home = () => {
     return (
@@ -35,6 +37,7 @@ function App() {
             <Route path="/update-status" element={<Layout><UpdateUserStatus /></Layout>} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/empty-new-room" element={<ExpenseApp />} />
+            <Route path="/create-expence" element={<Layout><CreateExpense /></Layout>} />
         </Routes>
     );
 }
