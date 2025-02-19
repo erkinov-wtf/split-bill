@@ -1,0 +1,263 @@
+body {
+    background-color: #D3D3D3;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.rectangle.primary {
+    width: 375px;
+    height: 812px;
+    background-color: #1E1F20;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.rectangle.secondary {
+    width: 375px;
+    height: 578px;
+    background-color: #F9F9F9;
+    position: absolute;
+    bottom: calc(50% - 406px);
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-right-radius: 24px;
+    border-top-left-radius: 24px;
+}
+
+.bottom-nav {
+    position: absolute;
+    bottom: calc(50% - 406px); /* Align with secondary rectangle */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 375px;
+    height: 84px;
+    background-color: #F9F9F9;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.nav-item span {
+    font-family: "Actor", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #787979; /* Set text color */
+    display: block; /* Ensures proper alignment */
+}
+
+
+
+.nav-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+    font-style: normal;
+}
+
+.add-button {
+    margin-top: -30px;
+}
+
+.plus-circle {
+    width: 64px;
+    height: 64px;
+    background-color: #FFCA62;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.plus-circle span {
+    color: black;
+    font-size: 40px;
+    font-weight: 300;
+}
+
+.secondary-image {
+    width: 160px;
+    height: 160px;
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.secondary-text {
+    font-family: "Actor", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #787979;
+    position: absolute;
+    top: 270px; /* Placing it right below the image */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+
+.arrow-down {
+    position: absolute;
+    top: 350px; /* Position below text */
+    left: 49%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 100px;
+    background-color: #D3D3D3; /* Light gray arrow color */
+    opacity: 0.7;
+}
+
+/* Arrowhead */
+.arrow-down::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 49%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 5px;
+    height: 5px;
+    border-right: 3px solid #D3D3D3;
+    border-bottom: 3px solid #D3D3D3;
+    opacity: 0.7;
+}
+
+.text-layout {
+    width: 229px;
+    height: 32px;
+    position: absolute;
+    left: 50%; /* Center horizontally */
+    top: 135px; /* Center vertically */
+    transform: translateX(-50%) translateY(-50%); /* Adjust for perfect centering */
+    display: flex; /* Use flexbox for centering the text */
+    justify-content: center; /* Horizontally center the text */
+    align-items: center; /* Vertically center the text */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow if the text is too long */
+}
+
+.primary-text {
+    font-family: 'Abril Fatface', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #FFFFFF; /* Adjust text color as needed */
+    width: 100%;
+    display: inline-block;
+    text-overflow: ellipsis; /* Add ellipsis if the text overflows */
+}
+
+/* New small text layout */
+.text-layout-small {
+    width: 150px;
+    height: 14px;
+    position: absolute;
+    left: 50%; /* Center horizontally */
+    top: 180px; /* Center vertically */
+    transform: translateX(-50%) translateY(-50%); /* Adjust for perfect centering */
+    display: flex; /* Use flexbox for centering the text */
+    justify-content: center; /* Horizontally center the text */
+    align-items: center; /* Vertically center the text */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden;
+}
+
+.small-text {
+    font-family: 'Actor', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #E0E0E0; /* Adjust text color as needed */
+    width: 100%;
+    display: inline-block;
+    text-overflow: ellipsis
+}
+
+/* New image layout */
+.statistics-layout {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 52px;
+    left: 239px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centers the image */
+}
+
+.statistics-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Keeps the aspect ratio intact */
+    max-width: 100%; /* Ensure the image is resized correctly */
+    max-height: 100%; /* Ensure the image is resized correctly */
+}
+
+.profile-layout {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 53.2px;
+    left: 309px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centers the image */
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Keeps the aspect ratio intact */
+    max-width: 100%; /* Ensure the image is resized correctly */
+    max-height: 100%; /* Ensure the image is resized correctly */
+}
+
+.back-layout {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50px;
+    left: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centers the image */
+}
+
+.back-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Keeps the aspect ratio intact */
+    max-width: 100%; /* Ensure the image is resized correctly */
+    max-height: 100%; /* Ensure the image is resized correctly */
+}
+
+
+.icon-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
