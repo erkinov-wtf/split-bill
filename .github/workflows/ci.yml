@@ -32,10 +32,10 @@ jobs:
         run: |
           ssh $SSH_USER@$SSH_HOST "
           cd ${{ secrets.LOCATION }} &&
-          systemctl stop ${{ secrets.SERVICE }}
-          git pull origin main &&
           cd backend &&
-          systemctl start ${{ secrets.SERVICE }} &&
+          docker compose stop &&
+          git pull origin main &&
+          docker compose up -d &&
           systemctl restart nginx"
 
         env:
