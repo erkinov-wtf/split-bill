@@ -12,6 +12,7 @@ import CreateExpense from "./pages/expence/createExpence.jsx";
 import Registration from "./pages/registration/index.jsx";
 import ExpenseApp from "./pages/empty-new-room/emptyNewRoom.jsx";
 import PrivateRoute from "./components/route.jsx";
+import InitialRoomCreation from "./pages/initial-room-creation/index.jsx";
 
 const Home = () => {
     return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/succes-page" element={<PrivateRoute><SuccessPage /></PrivateRoute>} />
             <Route path="/empty-new-room" element={<PrivateRoute><ExpenseApp /></PrivateRoute>} />
             <Route path="/create-expence" element={<PrivateRoute><Layout><CreateExpense /></Layout></PrivateRoute>} />
+            <Route path="/initial-room-creation" element={<PrivateRoute><InitialRoomCreation/></PrivateRoute>}/>
         </Routes>
     );
 }
