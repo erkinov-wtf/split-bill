@@ -4,16 +4,32 @@ import { useNavigate } from 'react-router-dom';
 const CreateRoom = () => {
     const [roomName, setRoomName] = useState('');
     const navigate = useNavigate();
+    const sessionId = localStorage.getItem("session_id");
+    const [errorMessage, setErrorMessage] = useState(""); // State for error message
 
-    const handleDone = () => {
+    const handleDone = async () => {
         if (roomName.trim()) {
-            // Process room creation here
-            console.log('Creating room:', roomName);
-
-            // Navigate back to home or to the newly created room
-            navigate('/');
+            try {
+                const response = await fetch("https://split-bill.steamfest.live/v1/rooms", {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                        "X-Ya-User-Ticket": sessionId,
+                    },
+                    body: JSON.stringify({
+                        name: roomName,
+                    }),
+                });
+                if (response.status === 200) {
+                    navigate("/rooms");
+                }
+            } catch (error) {
+                setErrorMessage("Something went wrong. Please try again later.");
+            }
         }
     };
+
+
 
     const handleCancel = () => {
         navigate('/');
@@ -62,6 +78,9 @@ const CreateRoom = () => {
                     Create a room to start collaborating with others. Use a clear name that participants will recognize.
                 </p>
             </div>
+            {errorMessage && (
+                <p className="text-red-500 text-sm mb-4">{errorMessage}</p>
+            )}
         </div>
     );
 };

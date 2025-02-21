@@ -4,7 +4,7 @@ import Layout from "./components/Layout";
 import Onboarding from "./pages/onboarding/index.jsx";
 import JoinRoomPage from "./pages/join-room/index.jsx";
 import Login from "./pages/login/index.jsx";
-import UsersRoomPage from "./pages/all-users-rooms/UsersRooms.jsx";
+import UsersRoomPage from "./pages/all-users-rooms/index.jsx";
 import CreateRoom from "./pages/create-room/index.jsx";
 import UpdateUserStatus from "./pages/update-user-status/index.jsx";
 import SuccessPage from "./pages/success-page/index.jsx";
