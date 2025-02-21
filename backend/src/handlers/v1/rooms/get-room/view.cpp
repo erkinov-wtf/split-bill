@@ -67,18 +67,6 @@ class GetRoom final : public userver::server::handlers::HttpHandlerBase {
       return userver::formats::json::ToString(response.ExtractValue());
     }
 
-    auto room_result = pg_cluster_->Execute(
-        userver::storages::postgres::ClusterHostType::kSlave,
-        "SELECT id, name, user_id FROM rooms WHERE id = $1 AND user_id = $2", room_id, session->user_id);
-
-
-    if (room_result.IsEmpty()) {
-      request.SetResponseStatus(userver::server::http::HttpStatus::kNotFound);
-      userver::formats::json::ValueBuilder response;
-      response["error"] = "Room not found";
-      return userver::formats::json::ToString(response.ExtractValue());
-    }
-
     auto room = room_result.AsSingleRow<split_bill::TRoom>(userver::storages::postgres::kRowTag);
 
     auto products_result = pg_cluster_->Execute(

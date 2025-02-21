@@ -11,13 +11,14 @@ const JoinRoomPage = () => {
 
     const fetchRoomDetails = async (roomId) => {
         try {
-            const response = await fetch(`https://split-bill.steamfest.live/v1/rooms/${roomId}`, {
-                method: "GET",
+            const response = await fetch(`https://split-bill.steamfest.live/v1/rooms/join/${roomId}`, {
+                method: "POST",
                 headers: {
                     "Content-type": "application/json",
                     "X-Ya-User-Ticket": sessionId,
                 },
             });
+            console.log(response)
             if (!response.ok) {
                 throw new Error(`Failed to fetch room ${roomId} details`);
             }

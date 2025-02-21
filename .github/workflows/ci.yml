@@ -1,0 +1,44 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - "ci*"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install SSH Client
+        run: |
+          sudo apt-get update && sudo apt-get install -y openssh-client
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+
+      - name: Pull latest changes and start service
+        run: |
+          ssh $SSH_USER@$SSH_HOST "
+          cd ${{ secrets.LOCATION }} &&
+          systemctl stop ${{ secrets.SERVICE }}
+          git pull origin main &&
+          systemctl start ${{ secrets.SERVICE }} &&
+          systemctl restart nginx"
+
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          LOCATION: ${{ secrets.LOCATION }}
+          SERVICE: ${{ secrets.SERVICE }}

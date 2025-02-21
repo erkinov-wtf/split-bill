@@ -11,7 +11,6 @@ import SuccessPage from "./pages/success-page/index.jsx";
 import CreateExpense from "./pages/expence/createExpence.jsx";
 import Registration from "./pages/registration/index.jsx";
 import PrivateRoute from "./components/route.jsx";
-import EmptyNewRoom from "./pages/empty-new-room/index.jsx";
 import EmptyRoomPage from "./pages/empty-new-room/index.jsx";
 import RoomPage from "./pages/room-page/index.jsx";
 
@@ -31,6 +30,7 @@ function App() {
             <Route path="/onboarding" element={<Onboarding/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/registration" element={<Registration/>}/>
+            <Route path="/success-page" element={<SuccessPage/>}/>
 
             {/* Protected Routes */}
             <Route path="*" element={<PrivateRoute><Layout><Home/></Layout></PrivateRoute>}/>
@@ -39,7 +39,6 @@ function App() {
             <Route path="/rooms" element={<PrivateRoute><Layout><UsersRoomPage/></Layout></PrivateRoute>}/>
             <Route path="/update-status" element={<PrivateRoute><Layout><UpdateUserStatus/></Layout></PrivateRoute>}/>
             <Route path="/empty-new-room" element={<PrivateRoute><Layout><EmptyRoomPage/></Layout></PrivateRoute>}/>
-            <Route path="/succes-page" element={<PrivateRoute><SuccessPage/></PrivateRoute>}/>
             <Route path="/create-expence" element={<PrivateRoute><Layout><CreateExpense/></Layout></PrivateRoute>}/>
 
             <Route path="/rooms/:roomId" element={<PrivateRoute><Layout><RoomPage/></Layout></PrivateRoute>}/>

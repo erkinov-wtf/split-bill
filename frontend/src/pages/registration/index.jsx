@@ -41,7 +41,7 @@ function Registration() {
             });
 
             if (response.ok) {
-                navigate("/login"); // Redirect to login
+                navigate("/success-page");
             } else {
                 const data = await response.json();
                 setErrorMessage(data.error || "An error occurred. Please try again.");
