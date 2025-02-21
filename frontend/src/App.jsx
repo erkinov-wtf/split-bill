@@ -10,8 +10,9 @@ import UpdateUserStatus from "./pages/update-user-status/index.jsx";
 import SuccessPage from "./pages/success-page/index.jsx";
 import CreateExpense from "./pages/expence/createExpence.jsx";
 import Registration from "./pages/registration/index.jsx";
-import ExpenseApp from "./pages/empty-new-room/emptyNewRoom.jsx";
 import PrivateRoute from "./components/route.jsx";
+import EmptyNewRoom from "./pages/empty-new-room/emptyNewRoom.jsx";
+import EmptyRoomPage from "./pages/empty-new-room/emptyNewRoom.jsx";
 
 const Home = () => {
     return (
@@ -36,8 +37,8 @@ function App() {
             <Route path="/create" element={<PrivateRoute><Layout><CreateRoom /></Layout></PrivateRoute>} />
             <Route path="/rooms" element={<PrivateRoute><Layout><UsersRoomPage /></Layout></PrivateRoute>} />
             <Route path="/update-status" element={<PrivateRoute><Layout><UpdateUserStatus /></Layout></PrivateRoute>} />
+            <Route path="/empty-new-room" element={<PrivateRoute><Layout><EmptyRoomPage /></Layout></PrivateRoute>} />
             <Route path="/succes-page" element={<PrivateRoute><SuccessPage /></PrivateRoute>} />
-            <Route path="/empty-new-room" element={<PrivateRoute><ExpenseApp /></PrivateRoute>} />
             <Route path="/create-expence" element={<PrivateRoute><Layout><CreateExpense /></Layout></PrivateRoute>} />
         </Routes>
     );
