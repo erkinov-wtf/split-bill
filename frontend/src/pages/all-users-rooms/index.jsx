@@ -107,6 +107,10 @@ export default function UsersRoomPage() {
     if (error) {
         return <div className="text-red-500 text-center">{error}</div>;
     }
+    
+    const redirectToSelectedRoom = (roomId) => {
+        navigate(`/rooms/${roomId}`);
+    }
 
     return (
         <div className="flex flex-col h-full">
@@ -161,7 +165,7 @@ export default function UsersRoomPage() {
                                 {filteredRooms
                                     .filter(room => room.status.toLowerCase() === "active")
                                     .map((room) => (
-                                        <div key={room.id} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center hover:bg-orange-400 hover:text-white">
+                                        <div key={room.id} onClick={() => redirectToSelectedRoom(room.id)} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center hover:bg-orange-400 hover:text-white">
                                             <div>
                                                 <h3 className="font-bold">{room.name}</h3>
                                                 <p className="text-sm flex items-center gap-1">
@@ -187,7 +191,7 @@ export default function UsersRoomPage() {
                                 {filteredRooms
                                     .filter(room => room.status.toLowerCase() === "archived")
                                     .map((room) => (
-                                        <div key={room.id} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center hover:bg-orange-400 hover:text-white">
+                                        <div key={room.id} onClick={() => redirectToSelectedRoom(room.id)} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center hover:bg-orange-400 hover:text-white">
                                             <div>
                                                 <h3 className="font-bold">{room.name}</h3>
                                                 <p className="text-sm flex items-center gap-1">

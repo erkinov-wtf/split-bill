@@ -11,7 +11,7 @@ const EmptyRoomPage = ({roomName, roomId}) => {
                 <div className="max-w-4xl mx-auto px-4 py-6">
                     <div className="flex items-center justify-between">
                         <button
-                            onClick={() => navigate(-1)}
+                            onClick={() => navigate("/rooms")}
                             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
                         >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

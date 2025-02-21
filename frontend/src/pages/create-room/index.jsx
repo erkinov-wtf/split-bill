@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateRoom = () => {
-    const [roomName, setRoomName] = useState('');
+    const [roomName, setRoomName] = useState("");
     const navigate = useNavigate();
     const sessionId = localStorage.getItem("session_id");
-    const [errorMessage, setErrorMessage] = useState(""); // State for error message
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleDone = async () => {
         if (roomName.trim()) {
@@ -23,7 +23,6 @@ const CreateRoom = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    // Navigate to the new room using its ID
                     navigate(`/rooms/${data.id}`);
                 }
             } catch (error) {
@@ -32,58 +31,39 @@ const CreateRoom = () => {
         }
     };
 
-
-
     const handleCancel = () => {
-        navigate('/');
+        navigate("/rooms");
     };
 
     return (
-        <div className="flex flex-col h-full bg-white rounded-lg shadow-md max-w-md mx-auto">
-            {/* Header */}
-            <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200">
-                <button
-                    onClick={handleCancel}
-                    className="text-gray-600 hover:text-gray-800 transition-colors"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-                <h2 className="text-lg font-semibold text-gray-800">Create Room</h2>
-                <button
-                    onClick={handleDone}
-                    className={`text-blue-600 font-medium ${!roomName.trim() ? 'opacity-50 cursor-not-allowed' : 'hover:text-blue-800 transition-colors'}`}
-                    disabled={!roomName.trim()}
-                >
-                    Done
-                </button>
-            </div>
-
-            {/* Main Content */}
-            <div className="flex-grow flex flex-col px-6 pt-8 pb-6">
-                <label htmlFor="roomName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Room Name
-                </label>
-                <div className="relative">
-                    <input
-                        id="roomName"
-                        type="text"
-                        value={roomName}
-                        onChange={(e) => setRoomName(e.target.value)}
-                        className="w-full border-0 border-b-2 border-gray-300 pb-2 text-lg text-black focus:ring-0 focus:border-blue-500 transition-colors bg-transparent"
-                        placeholder="Enter a descriptive name"
-                        autoFocus
-                    />
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative -mt-20">
+                <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Create Room</h2>
+                <input
+                    type="text"
+                    value={roomName}
+                    onChange={(e) => setRoomName(e.target.value)}
+                    className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter a descriptive name"
+                    autoFocus
+                />
+                {errorMessage && <p className="text-red-500 text-sm mt-2">{errorMessage}</p>}
+                <p className="text-gray-600 text-sm mt-2">Create a room to start collaborating with others. Use a clear name that participants will recognize.</p>
+                <div className="mt-4 flex justify-between">
+                    <button
+                        onClick={handleCancel}
+                        className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={handleDone}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                    >
+                        Done
+                    </button>
                 </div>
-
-                <p className="mt-4 text-sm text-gray-500">
-                    Create a room to start collaborating with others. Use a clear name that participants will recognize.
-                </p>
             </div>
-            {errorMessage && (
-                <p className="text-red-500 text-sm mb-4">{errorMessage}</p>
-            )}
         </div>
     );
 };
