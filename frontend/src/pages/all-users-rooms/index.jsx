@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Plus, User, DollarSign, Pin, Search, X } from "lucide-react";
+import { Plus, User, DollarSign, Pin, Search, X, UserPlus } from "lucide-react";
 import noRoom from "../../assets/img.png";
 import { useNavigate } from "react-router-dom";
 
@@ -111,6 +111,9 @@ export default function UsersRoomPage() {
     const redirectToSelectedRoom = (roomId) => {
         navigate(`/rooms/${roomId}`);
     }
+    const joinRoom = () => {
+        navigate(`/join`);
+    }
 
     return (
         <div className="flex flex-col h-full">
@@ -122,15 +125,16 @@ export default function UsersRoomPage() {
                         {rooms.length >= 1 && (
                             <button
                                 className="bg-yellow-400 p-2 rounded-full shadow-md hover:bg-yellow-500"
-                                onClick={() => setShowSearch(!showSearch)}
-                            >
+                                onClick={() => setShowSearch(!showSearch)}>
                                 {showSearch ? <X className="w-6 h-6 text-black" /> : <Search className="w-6 h-6 text-black" />}
                             </button>
                         )}
-                        <button
-                            className="bg-yellow-400 p-2 rounded-full shadow-md hover:bg-yellow-500"
-                            onClick={addRoom}
-                        >
+                        <button className="bg-yellow-400 p-2 rounded-full shadow-md hover:bg-yellow-500"
+                            onClick={joinRoom}>
+                            <UserPlus className="w-6 h-6 text-black items-center" />
+                        </button>
+                        <button className="bg-yellow-400 p-2 rounded-full shadow-md hover:bg-yellow-500"
+                            onClick={addRoom}>
                             <Plus className="w-6 h-6 text-black items-center" />
                         </button>
                     </div>
