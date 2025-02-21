@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { Eye, Check, X, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function Registration() {
+    const [fullName, setFullName] = useState("");
+    const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [showValidation, setShowValidation] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const navigate = useNavigate();
 
     const isLongEnough = password.length >= 8;
     const hasLetter = /[A-Za-z]/.test(password);
@@ -14,27 +20,46 @@ function Registration() {
 
     const allValid = isLongEnough && hasLetter && hasNumber && passwordsMatch;
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-        setShowValidation(true);
-    };
-
-    const handleConfirmPasswordChange = (e) => {
-        setConfirmPassword(e.target.value);
-        setShowValidation(true);
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (allValid) {
-            alert("Registration Successful!");
+        setShowValidation(true);
+        setErrorMessage("");
+
+        if (!allValid) return;
+
+        try {
+            const response = await fetch("https://split-bill.steamfest.live/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: login,
+                    password: password,
+                    full_name: fullName,
+                }),
+            });
+
+            if (response.ok) {
+                navigate("/login"); // Redirect to login
+            } else {
+                const data = await response.json();
+                setErrorMessage(data.error || "An error occurred. Please try again.");
+            }
+        } catch (error) {
+            setErrorMessage("Something went wrong. Please try again later.");
         }
     };
 
+
     return (
         <div className="flex items-center justify-center min-h-screen bg-white">
-            <div className="w-96 p-6 bg-white rounded-2xl  shadow-xl  ring-amber-500 ring 1">
+            <div className="w-96 p-6 bg-white rounded-2xl shadow-xl ring-amber-500 ring-1">
                 <h2 className="text-3xl font-bold text-gray-800">Registration</h2>
+
+                {errorMessage && (
+                    <p className="text-red-500 text-sm text-center mt-2">{errorMessage}</p>
+                )}
 
                 <form onSubmit={handleSubmit}>
                     <label className="block text-gray-500 font-semibold mt-4">FULL NAME</label>
@@ -42,6 +67,8 @@ function Registration() {
                         type="text"
                         placeholder="Your Full Name"
                         className="w-full p-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
                         required
                     />
 
@@ -50,6 +77,8 @@ function Registration() {
                         type="text"
                         placeholder="Enter login"
                         className="w-full p-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        value={login}
+                        onChange={(e) => setLogin(e.target.value)}
                         required
                     />
 
@@ -60,7 +89,7 @@ function Registration() {
                             placeholder="Enter password"
                             className="w-full p-2 border rounded-lg pr-10 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
                             value={password}
-                            onChange={handlePasswordChange}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                         />
                         <Eye
@@ -76,20 +105,15 @@ function Registration() {
                             placeholder="Confirm password"
                             className="w-full p-2 border rounded-lg pr-10 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
                             value={confirmPassword}
-                            onChange={handleConfirmPasswordChange}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                             required
                         />
-                        {/*<Eye*/}
-                        {/*    className="absolute right-3 top-3 text-gray-500 cursor-pointer"*/}
-                        {/*    onClick={() => setPasswordVisible(!passwordVisible)}*/}
-                        {/*/>*/}
-                        {/*{passwordsMatch && <Check className="absolute right-3 top-3 text-green-500" />}*/}
                     </div>
 
                     {showValidation && !allValid && (
                         <div className="mb-4">
-                            <p className={isLongEnough ? "text-green-500 flex items-center" : "text-red-500 flex items-center "}>
-                                {isLongEnough ? <Check className="mr-2 " /> : <X className="mr-2" />} Must be at least 8 characters long
+                            <p className={isLongEnough ? "text-green-500 flex items-center" : "text-red-500 flex items-center"}>
+                                {isLongEnough ? <Check className="mr-2" /> : <X className="mr-2" />} Must be at least 8 characters long
                             </p>
                             <p className={hasLetter ? "text-green-500 flex items-center" : "text-red-500 flex items-center"}>
                                 {hasLetter ? <Check className="mr-2" /> : <X className="mr-2" />} Must include at least one letter
