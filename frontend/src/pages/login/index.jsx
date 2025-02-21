@@ -3,7 +3,7 @@ import { Eye, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState(""); // State for error message
@@ -25,7 +25,7 @@ function Login() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    username: email,
+                    username: username,
                     password: password,
                 }),
             });
@@ -49,13 +49,13 @@ function Login() {
                 <h3 className="text-4xl font-bold text-gray-800">Login</h3>
                 <p className="text-gray-600 mb-6">Welcome back!</p>
 
-                <label className="block text-gray-700 font-semibold">EMAIL</label>
+                <label className="block text-gray-700 font-semibold">USERAME</label>
                 <div className="relative mb-4">
                     <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="yourname@email.com"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="sama"
                         className="w-full p-2 border rounded-lg pr-10 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                 </div>

@@ -37,6 +37,7 @@ function Registration() {
                     username: login,
                     password: password,
                     full_name: fullName,
+                    photo_url: `https://api.dicebear.com/8.x/pixel-art/svg?seed=${Math.random()}`
                 }),
             });
 
