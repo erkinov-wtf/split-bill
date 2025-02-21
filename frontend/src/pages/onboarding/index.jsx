@@ -1,4 +1,18 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 const Onboarding = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            navigate("/login");
+        }, 3000);
+
+        // Cleanup timer when component unmounts
+        return () => clearTimeout(timer);
+    }, [navigate]);
+
     return (
         <div className="flex items-center justify-center min-h-screen w-screen bg-white">
             <div className="flex flex-col items-center">
