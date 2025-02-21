@@ -1,6 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SuccessPage = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            navigate("/login");
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [navigate]);
+
+    const redirectLogin = () => {
+        navigate("/login");
+    };
+
     return (
         <div className="flex items-center justify-center h-screen bg-white">
             <div className="text-center bg-white ">
@@ -15,14 +30,13 @@ const SuccessPage = () => {
                 </div>
                 <h2 className="text-2xl font-bold mb-2">Congrats!</h2>
                 <p className="text-gray-600">You have successfully registered.</p>
-                <p className="text-gray-600 mb-4">Please use the new password and login.</p>
-                <button className="bg-yellow-400 text-white font-bold py-2 px-6 rounded-lg hover:bg-yellow-500 ">
+                <p className="text-gray-600 mb-4">Redirecting to login in 3 seconds...</p>
+                <button onClick={redirectLogin} className="bg-yellow-400 text-white font-bold py-2 px-6 rounded-lg hover:bg-yellow-500">
                     Log In Now
                 </button>
             </div>
         </div>
     );
 };
-
 
 export default SuccessPage;

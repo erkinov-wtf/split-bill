@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Plus, User, DollarSign, Pin, Search, X } from "lucide-react";
+import { Plus, User, DollarSign, Pin, Search, X, UserPlus } from "lucide-react";
 import noRoom from "../../assets/img.png";
 import { useNavigate } from "react-router-dom";
 
@@ -107,6 +107,13 @@ export default function UsersRoomPage() {
     if (error) {
         return <div className="text-red-500 text-center">{error}</div>;
     }
+    
+    const redirectToSelectedRoom = (roomId) => {
+        navigate(`/rooms/${roomId}`);
+    }
+    const joinRoom = () => {
+        navigate(`/join`);
+    }
 
     return (
         <div className="flex flex-col h-full">
@@ -118,15 +125,16 @@ export default function UsersRoomPage() {
                         {rooms.length >= 1 && (
                             <button
                                 className="bg-yellow-400 p-2 rounded-full shadow-md hover:bg-yellow-500"
-                                onClick={() => setShowSearch(!showSearch)}
-                            >
+                                onClick={() => setShowSearch(!showSearch)}>
                                 {showSearch ? <X className="w-6 h-6 text-black" /> : <Search className="w-6 h-6 text-black" />}
                             </button>
                         )}
-                        <button
-                            className="bg-yellow-400 p-2 rounded-full shadow-md hover:bg-yellow-500"
-                            onClick={addRoom}
-                        >
+                        <button className="bg-yellow-400 p-2 rounded-full shadow-md hover:bg-yellow-500"
+                            onClick={joinRoom}>
+                            <UserPlus className="w-6 h-6 text-black items-center" />
+                        </button>
+                        <button className="bg-yellow-400 p-2 rounded-full shadow-md hover:bg-yellow-500"
+                            onClick={addRoom}>
                             <Plus className="w-6 h-6 text-black items-center" />
                         </button>
                     </div>
@@ -161,7 +169,7 @@ export default function UsersRoomPage() {
                                 {filteredRooms
                                     .filter(room => room.status.toLowerCase() === "active")
                                     .map((room) => (
-                                        <div key={room.id} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center hover:bg-orange-400 hover:text-white">
+                                        <div key={room.id} onClick={() => redirectToSelectedRoom(room.id)} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center hover:bg-orange-400 hover:text-white">
                                             <div>
                                                 <h3 className="font-bold">{room.name}</h3>
                                                 <p className="text-sm flex items-center gap-1">
@@ -187,7 +195,7 @@ export default function UsersRoomPage() {
                                 {filteredRooms
                                     .filter(room => room.status.toLowerCase() === "archived")
                                     .map((room) => (
-                                        <div key={room.id} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center hover:bg-orange-400 hover:text-white">
+                                        <div key={room.id} onClick={() => redirectToSelectedRoom(room.id)} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center hover:bg-orange-400 hover:text-white">
                                             <div>
                                                 <h3 className="font-bold">{room.name}</h3>
                                                 <p className="text-sm flex items-center gap-1">
