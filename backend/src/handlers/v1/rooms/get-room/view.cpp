@@ -69,7 +69,7 @@ class GetRoom final : public userver::server::handlers::HttpHandlerBase {
 
     auto room_result = pg_cluster_->Execute(
         userver::storages::postgres::ClusterHostType::kSlave,
-        "SELECT id, name, user_id FROM rooms WHERE id = $1", room_id;
+        "SELECT id, name, user_id FROM rooms WHERE id = $1", room_id);
 
 
     if (room_result.IsEmpty()) {
