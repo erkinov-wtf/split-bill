@@ -34,6 +34,7 @@ jobs:
           cd ${{ secrets.LOCATION }} &&
           systemctl stop ${{ secrets.SERVICE }}
           git pull origin main &&
+          cd backend &&
           systemctl start ${{ secrets.SERVICE }} &&
           systemctl restart nginx"
 
