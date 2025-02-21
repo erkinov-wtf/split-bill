@@ -1,43 +1,44 @@
 import React from "react";
-import { Container, Grid, Avatar, Typography, Button, Divider } from "@mui/material";
-import { Bookmark, Groups, Newspaper, Event } from "@mui/icons-material";
+import {Divider, Typography} from "@mui/material";
 
 const UserInfo = () => (
-    <div className="bg-white text-black p-4 rounded-lg shadow sticky top-0">
+    <div className="bg-white p-4 rounded-lg shadow sticky top-0">
         <div className="flex flex-col items-center text-center">
-            <Avatar src="/profile.jpg" alt="User" className="w-24 h-24 mb-2 border-4 border-gray-300 rounded-full mx-auto" />
-            <Typography variant="h6" className="font-semibold">Rakhmatilla Erkinov</Typography>
-            <Typography variant="body2" className="text-gray-600">Student at New Uzbekistan University</Typography>
-            <Typography variant="body2" className="text-gray-600 mb-2">Tashkent Region</Typography>
-            <Typography variant="body2" className="font-medium">OY STARTECH LLC</Typography>
+            <img
+                src="/profile.jpg"
+                alt="User"
+                className="w-24 h-24 mb-2 border-4 border-gray-300 rounded-full mx-auto"
+            />
+            <h2 className="text-lg font-semibold text-gray-900">Rakhmatilla Erkinov</h2>
+            <p className="text-gray-600">Student at New Uzbekistan University</p>
+            <p className="text-gray-600 mb-2">Tashkent Region</p>
+            <p className="font-medium text-gray-900">OY STARTECH LLC</p>
         </div>
-        <Divider className="my-3 border-gray-300" />
+        <hr className="my-3 border-gray-300" />
         <div className="flex justify-between text-gray-600 text-sm">
-            <Typography>Profile viewers</Typography>
-            <Typography className="text-blue-500 font-semibold">13</Typography>
+            <span>Profile viewers</span>
+            <span className="text-blue-500 font-semibold">13</span>
         </div>
-        <Typography className="text-blue-500 text-sm cursor-pointer mt-1 hover:underline">View all analytics</Typography>
-        <Divider className="my-3 border-gray-300" />
-        <Typography className="text-gray-600 text-sm mb-2">Strengthen your profile with an AI writing assistant</Typography>
-        <Button variant="contained" color="warning" className="mt-2 w-full py-2 text-sm font-semibold">Reactivate</Button>
-        <Divider className="my-3 border-gray-300" />
+        <button className="mt-2 w-full py-2 text-sm font-semibold bg-orange-500 text-white rounded hover:bg-orange-600">
+            Reactivate
+        </button>
+        <hr className="my-3 border-gray-300" />
         <div className="space-y-2 text-gray-600">
-            <div className="flex items-center cursor-pointer hover:text-black">
-                <Bookmark fontSize="small" className="mr-2" /> Saved items
+            <div className="flex items-center cursor-pointer hover:text-gray-900">
+                <span className="mr-2">📑</span> Saved items
             </div>
-            <div className="flex items-center cursor-pointer hover:text-black">
-                <Groups fontSize="small" className="mr-2" /> Groups
+            <div className="flex items-center cursor-pointer hover:text-gray-900">
+                <span className="mr-2">👥</span> Groups
             </div>
-            <div className="flex items-center cursor-pointer hover:text-black">
-                <Newspaper fontSize="small" className="mr-2" /> Newsletters
+            <div className="flex items-center cursor-pointer hover:text-gray-900">
+                <span className="mr-2">📰</span> Newsletters
             </div>
-            <div className="flex items-center cursor-pointer hover:text-black">
-                <Event fontSize="small" className="mr-2" /> Events
+            <div className="flex items-center cursor-pointer hover:text-gray-900">
+                <span className="mr-2">📅</span> Events
             </div>
         </div>
     </div>
 );
-
 
 const ExtraContent = () => (
     <div className="bg-white text-black p-4 rounded-lg shadow sticky top-0">
@@ -90,19 +91,27 @@ const ExtraContent = () => (
 
 const Layout = ({ children }) => {
     return (
-        <Container maxWidth="lg" className="h-screen flex items-start">
-            <Grid container spacing={2} className="w-full">
-                <Grid item xs={12} md={4}>
-                    <UserInfo />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <div className="bg-white p-4 rounded-lg shadow">{children}</div>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <ExtraContent />
-                </Grid>
-            </Grid>
-        </Container>
+        <div className="min-h-screen bg-gray-100">
+            <div className="max-w-7xl mx-auto py-4 px-4">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div className="md:col-span-3">
+                        <div className="relative">
+                            <UserInfo />
+                        </div>
+                    </div>
+                    <div className="md:col-span-6">
+                        <div className="min-h-[calc(100vh-2rem)] bg-white rounded-lg shadow">
+                            {children}
+                        </div>
+                    </div>
+                    <div className="md:col-span-3">
+                        <div className="relative">
+                            <ExtraContent />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 
