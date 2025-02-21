@@ -20,8 +20,11 @@ const CreateRoom = () => {
                         name: roomName,
                     }),
                 });
-                if (response.status === 200) {
-                    navigate("/rooms");
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Navigate to the new room using its ID
+                    navigate(`/rooms/${data.id}`);
                 }
             } catch (error) {
                 setErrorMessage("Something went wrong. Please try again later.");
