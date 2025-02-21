@@ -8,7 +8,7 @@ import UsersRoomPage from "./pages/all-users-rooms/index.jsx";
 import CreateRoom from "./pages/create-room/index.jsx";
 import UpdateUserStatus from "./pages/update-user-status/index.jsx";
 import SuccessPage from "./pages/success-page/index.jsx";
-import CreateExpense from "./pages/expence/createExpence.jsx";
+import CreateExpense from "./pages/expence/index.jsx";
 import Registration from "./pages/registration/index.jsx";
 import PrivateRoute from "./components/route.jsx";
 import EmptyRoomPage from "./pages/empty-new-room/index.jsx";

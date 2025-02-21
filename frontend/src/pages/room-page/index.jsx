@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import EmptyRoomPage from "../empty-new-room/index.jsx";
+import RoomWithProducts from "../room-with-products/index.jsx";
 
 const RoomPage = () => {
     const { roomId } = useParams();
@@ -57,8 +58,7 @@ const RoomPage = () => {
         />;
     }
 
-    // You'll implement this component later for rooms with products
-    //return <RoomWithProducts roomData={roomData} />;
+    return <RoomWithProducts roomData={roomData} />;
 };
 
 export default RoomPage;
