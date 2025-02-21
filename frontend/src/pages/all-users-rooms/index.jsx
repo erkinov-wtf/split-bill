@@ -12,10 +12,9 @@ export default function UsersRoomPage() {
     const navigate = useNavigate();
     const sessionId = localStorage.getItem("session_id");
 
-    // Fetch room details by ID
     const fetchRoomDetails = async (roomId) => {
         try {
-            const response = await fetch(`https://split-bill.steamfest.live/v1/rooms/${roomId}`, {
+            const response = await fetch(`https://split-bill.steamfest.live/v1/rooms/${roomId}?limit=1000`, {
                 method: "GET",
                 headers: {
                     "Content-type": "application/json",

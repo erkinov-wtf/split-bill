@@ -58,7 +58,7 @@ const RoomPage = () => {
     }
 
     // You'll implement this component later for rooms with products
-    return <RoomWithProducts roomData={roomData} />;
+    //return <RoomWithProducts roomData={roomData} />;
 };
 
 export default RoomPage;
