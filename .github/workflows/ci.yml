@@ -33,10 +33,11 @@ jobs:
           ssh $SSH_USER@$SSH_HOST "
           cd ${{ secrets.LOCATION }} &&
           cd backend &&
-          docker compose stop &&
+          systemctl stop ${{ secrets.SERVICE }}
           git pull origin main &&
-          docker compose up -d &&
+          systemctl start ${{ secrets.SERVICE }} &&
           systemctl restart nginx"
+
 
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
