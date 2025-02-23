@@ -92,7 +92,7 @@ export default function UsersRoomPage() {
     }, []);
 
     const addRoom = async () => {
-        navigate("/create");
+        navigate("/rooms/create");
     };
 
     const filteredRooms = rooms.filter(room =>
@@ -111,7 +111,7 @@ export default function UsersRoomPage() {
         navigate(`/rooms/${roomId}`);
     }
     const joinRoom = () => {
-        navigate(`/join`);
+        navigate(`/rooms/join`);
     }
 
     return (

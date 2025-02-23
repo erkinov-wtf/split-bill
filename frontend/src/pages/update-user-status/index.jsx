@@ -24,28 +24,43 @@ const UpdateUserStatus = () => {
             });
             const responseData = await response.json();
 
-            const product = responseData.data[0]?.products.find(p => p.id === parseInt(productId));
-            const usersForProduct = responseData.data.filter(user =>
-                user.products.some(p => p.id === parseInt(productId))
-            ).map(user => ({
-                id: user.id,
-                full_name: user.full_name,
-                photo_url: user.photo_url,
-                amount: user.products.find(p => p.id === parseInt(productId)).price,
-                status: user.products.find(p => p.id === parseInt(productId)).status
-            }));
+            let totalAmount = 0;
+            let remainingAmount = 0;
+
+            const usersForProduct = responseData.data
+                .filter(user => user.products.some(p => p.id === parseInt(productId)))
+                .map(user => {
+                    const product = user.products.find(p => p.id === parseInt(productId));
+
+                    if (product) {
+                        totalAmount += product.price; // Sum up total product price
+                        if (product.status === "UNPAID") {
+                            remainingAmount += product.price; // Sum only unpaid amounts
+                        }
+                    }
+
+                    return {
+                        id: user.id,
+                        full_name: user.full_name,
+                        photo_url: user.photo_url,
+                        amount: product?.price || 0,
+                        status: product?.status || "UNKNOWN",
+                    };
+                });
 
             setData({
-                productName: product?.name || 'Product',
-                totalAmount: product?.price || 0,
-                users: usersForProduct
+                productName: usersForProduct.length > 0 ? usersForProduct[0].name : "Unknown Product",
+                totalAmount,
+                remainingAmount,
+                users: usersForProduct,
             });
             setIsLoading(false);
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error("Error fetching data:", error);
             setIsLoading(false);
         }
     };
+
 
     const handleUserToggle = (userId) => {
         setSelectedUsers(prev =>
@@ -55,9 +70,42 @@ const UpdateUserStatus = () => {
         );
     };
 
-    const handleStatusUpdate = (newStatus) => {
-        console.log('Updating status to', newStatus, 'for users:', selectedUsers);
+    const handleStatusUpdate = async (newStatus) => {
+        if (selectedUsers.length === 0) return;
+
+        const payload = {
+            data: selectedUsers.map(userId => ({
+                user_id: userId,
+                room_id: parseInt(roomId),
+                product_id: parseInt(productId),
+                product_status: newStatus
+            }))
+        };
+
+        try {
+            const response = await fetch("https://split-bill.steamfest.live/v1/products/bulk-update", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Ya-User-Ticket": sessionId,
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to update status");
+            }
+
+            const responseData = await response.json();
+            console.log("Status updated successfully:", responseData);
+
+            setSelectedUsers([]);
+            navigate(`/rooms/${roomId}`)
+        } catch (error) {
+            console.error("Error updating status:", error);
+        }
     };
+
 
     if (isLoading) {
         return (
@@ -104,7 +152,7 @@ const UpdateUserStatus = () => {
                         <div className="text-right">
                             <p className="text-gray-500 text-sm mb-1">Remaining to Pay</p>
                             <p className="text-2xl font-semibold text-gray-900">
-                                ${(data.totalAmount / 100).toFixed(2)}
+                                ${(data.remainingAmount / 100).toFixed(2)}
                             </p>
                         </div>
                     </div>
@@ -153,14 +201,14 @@ const UpdateUserStatus = () => {
             <div className="sticky bottom-0 py-4">
                 <div className="flex gap-4 max-w-150 mx-auto">
                     <button
-                        onClick={() => handleStatusUpdate('PAID')}
+                        onClick={() => handleStatusUpdate('UNPAID')}
                         className="flex-1 bg-green-500 text-white py-4 rounded-xl font-medium hover:bg-green-600 transition-colors"
                         disabled={selectedUsers.length === 0}
                     >
                         Make Unpaid
                     </button>
                     <button
-                        onClick={() => handleStatusUpdate('UNPAID')}
+                        onClick={() => handleStatusUpdate('PAID')}
                         className="flex-1 bg-red-500 text-white py-4 rounded-xl font-medium hover:bg-red-600 transition-colors"
                         disabled={selectedUsers.length === 0}
                     >
