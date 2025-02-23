@@ -20,6 +20,9 @@ add_library(${PROJECT_NAME}_objs OBJECT
         src/models/product.hpp
         src/models/product.cpp
 
+        src/models/product-bulk-update.hpp
+        src/models/product-bulk-update.cpp
+
         src/models/user-product.hpp
         src/models/user-product.cpp
 
@@ -69,6 +72,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
         # Delete Product
         src/handlers/v1/products/delete-product/view.hpp
         src/handlers/v1/products/delete-product/view.cpp
+
+        # Bulk Update Product
+        src/handlers/v1/products/bulk-update/view.hpp
+        src/handlers/v1/products/bulk-update/view.cpp
 
         # Filters
         src/handlers/v1/user-products/filters.hpp

@@ -14,6 +14,7 @@
 #include "handlers/v1/products/get-product/view.hpp"
 #include "handlers/v1/products/delete-product/view.hpp"
 #include "handlers/v1/products/get-products/view.hpp"
+#include "handlers/v1/products/bulk-update/view.hpp"
 
 #include "handlers/v1/rooms/create-room/view.hpp"
 #include "handlers/v1/rooms/get-all-rooms/view.hpp"
@@ -48,6 +49,7 @@ int main(int argc, char* argv[]) {
     split_bill::AppendGetProduct(component_list);
     split_bill::AppendDeleteProduct(component_list);
     split_bill::AppendGetProducts(component_list);
+    split_bill::AppendProductBulkUpdate(component_list);
 
     // rooms components
     split_bill::AppendAddRoom(component_list);
