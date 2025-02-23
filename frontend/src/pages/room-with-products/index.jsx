@@ -31,7 +31,8 @@ const RoomWithProducts = ({ roomData }) => {
                         </div>
                         <div className="flex gap-3">
                             <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
+                                     viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                           d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                 </svg>
@@ -41,9 +42,7 @@ const RoomWithProducts = ({ roomData }) => {
                 </div>
             </div>
 
-            {/* Main Content */}
             <div className="flex-1 px-4 py-8 max-w-4xl mx-auto w-full">
-                {/* Stats Card */}
                 <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
                     <div className="grid grid-cols-2 gap-6 mb-6">
                         <div>
@@ -74,6 +73,7 @@ const RoomWithProducts = ({ roomData }) => {
                 <div className="space-y-4">
                     {roomData.room_products.map((product) => (
                         <div key={product.id}
+                             onClick={() => navigate(`/rooms/${roomData.id}/product/${product.id}`)}
                              className="bg-white rounded-xl shadow-sm p-4 flex items-center justify-between hover:shadow-md transition-shadow">
                             <div className="flex items-center">
                                 <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
@@ -90,16 +90,15 @@ const RoomWithProducts = ({ roomData }) => {
                             </div>
                         </div>
                     ))}
-                    <div className="fixed bottom-6 inset-x-0 px-4">
-                        <button
-                            onClick={() => navigate(`/rooms/${roomData.id}/new-expense`)}
-                            className="w-full max-w-150 mx-auto block bg-orange-500 text-white py-4 rounded-xl font-medium hover:bg-orange-600 transition-colors">
-                            Create New Expense
-                        </button>
-                    </div>
                 </div>
             </div>
-
+            <div className="sticky bottom-0 py-4">
+                <button
+                    onClick={() => navigate(`/rooms/${roomData.id}/new-expense`)}
+                    className="w-full max-w-150 mx-auto block bg-orange-500 text-white py-4 rounded-xl font-medium hover:bg-orange-600 transition-colors">
+                    Create New Expense
+                </button>
+            </div>
         </div>
     );
 };

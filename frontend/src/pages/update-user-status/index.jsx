@@ -1,175 +1,172 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const UpdateUserStatus = () => {
+    const { roomId, productId } = useParams();
     const navigate = useNavigate();
+    const [data, setData] = useState(null);
+    const [selectedUsers, setSelectedUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const sessionId = localStorage.getItem("session_id");
 
-    // Initial users data
-    const [users, setUsers] = useState([
-        { id: 1, name: 'Benjamin Willis', amount: 128.0, paid: true },
-        { id: 2, name: 'Beulah Walker', amount: 128.0, paid: false, hasNotification: true },
-        { id: 3, name: 'Sally Hawkins', amount: 128.0, paid: false },
-        { id: 4, name: 'Song Bao', amount: 128.0, paid: true },
-    ]);
+    useEffect(() => {
+        fetchData();
+    }, [roomId, productId]);
 
-    // Pre-select Benjamin
-    const [selectedUsers, setSelectedUsers] = useState([1]);
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`https://split-bill.steamfest.live/v1/rooms/${roomId}/calculate`, {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json",
+                    "X-Ya-User-Ticket": sessionId,
+                },
+            });
+            const responseData = await response.json();
 
-    const toggleUserSelection = (userId) => {
-        if (selectedUsers.includes(userId)) {
-            setSelectedUsers(selectedUsers.filter((id) => id !== userId));
-        } else {
-            setSelectedUsers([...selectedUsers, userId]);
+            const product = responseData.data[0]?.products.find(p => p.id === parseInt(productId));
+            const usersForProduct = responseData.data.filter(user =>
+                user.products.some(p => p.id === parseInt(productId))
+            ).map(user => ({
+                id: user.id,
+                full_name: user.full_name,
+                photo_url: user.photo_url,
+                amount: user.products.find(p => p.id === parseInt(productId)).price,
+                status: user.products.find(p => p.id === parseInt(productId)).status
+            }));
+
+            setData({
+                productName: product?.name || 'Product',
+                totalAmount: product?.price || 0,
+                users: usersForProduct
+            });
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setIsLoading(false);
         }
     };
 
-    const handleBack = () => {
-        navigate(-1);
-    };
-
-    const makeUnpaid = () => {
-        setUsers((prev) =>
-            prev.map((user) =>
-                selectedUsers.includes(user.id)
-                    ? { ...user, paid: false }
-                    : user
-            )
+    const handleUserToggle = (userId) => {
+        setSelectedUsers(prev =>
+            prev.includes(userId)
+                ? prev.filter(id => id !== userId)
+                : [...prev, userId]
         );
     };
 
-    const makePaid = () => {
-        setUsers((prev) =>
-            prev.map((user) =>
-                selectedUsers.includes(user.id)
-                    ? { ...user, paid: true }
-                    : user
-            )
-        );
+    const handleStatusUpdate = (newStatus) => {
+        console.log('Updating status to', newStatus, 'for users:', selectedUsers);
     };
+
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-neutral-50">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+        );
+    }
 
     return (
-        <div className="bg-white min-h-screen flex flex-col">
+        <div className="flex flex-col min-h-screen bg-neutral-50">
             {/* Header */}
-            <div className="p-4 border-b border-gray-200 flex items-center">
-                <button onClick={handleBack} className="mr-4">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    >
-                        <path d="M19 12H5M12 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <h5 className="text-center text-black flex-grow text-lg mr-7 font-semibold">Expense</h5>
-                {/* Dummy spacer for alignment */}
-                <div className="w-6"></div>
-            </div>
-
-            {/* Main Content */}
-            <div className="flex-grow text-black p-4">
-                <h2 className="text-2xl font-bold mb-5">Product super name</h2>
-                <p className="text-sm mb-4">Assigned Friends</p>
-
-                <div className="space-y-4">
-                    {users.map((user) => {
-                        const isSelected = selectedUsers.includes(user.id);
-                        return (
-                            <div key={user.id} className="flex items-center justify-between">
-                                {/* Left side: checkbox, avatar/notification, name & status */}
-                                <div className="flex items-center">
-                                    {/* Checkbox */}
-                                    <div
-                                        onClick={() => toggleUserSelection(user.id)}
-                                        className={`w-5 h-5 mr-3 flex items-center justify-center border border-gray-300 rounded cursor-pointer 
-                      ${isSelected ? 'bg-black border-black' : 'bg-white'}
-                    `}
-                                    >
-                                        {isSelected && (
-                                            <svg
-                                                width="14"
-                                                height="14"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    d="M5 12L10 17L19 8"
-                                                    stroke="white"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                />
-                                            </svg>
-                                        )}
-                                    </div>
-
-                                    {/* Notification/avatar */}
-                                    {user.hasNotification ? (
-                                        <div className="mr-3">
-                                            <div className="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-white">
-                                                {/* Example bell icon */}
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke="currentColor"
-                                                    className="w-4 h-4"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth="2"
-                                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                                                    />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className="w-8 h-8 rounded-full bg-gray-300 mr-3"></div>
-                                    )}
-
-                                    <div>
-                                        <p className="font-medium text-sm">{user.name}</p>
-                                        <p
-                                            className={`text-xs ${
-                                                user.paid ? 'text-green-500' : 'text-red-500'
-                                            }`}
-                                        >
-                                            {user.paid ? 'Paid' : 'Unpaid'}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Right side: amount */}
-                                <div>
-                                    <p className="font-medium text-sm">${user.amount.toFixed(2)}</p>
-                                </div>
-                            </div>
-                        );
-                    })}
+            <div className="bg-white shadow-sm">
+                <div className="max-w-4xl mx-auto px-4 py-6">
+                    <div className="flex items-center justify-between">
+                        <button
+                            onClick={() => navigate(`/rooms/${roomId}`)}
+                            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/>
+                            </svg>
+                        </button>
+                        <div className="flex flex-col items-center">
+                            <h3 className="text-3xl font-semibold text-gray-900">{data.productName}</h3>
+                            <span className="text-xl text-gray-500 mt-1">Product Status</span>
+                        </div>
+                        <div className="w-10"></div>
+                    </div>
                 </div>
             </div>
 
-            {/* Footer with buttons */}
-            <div className="p-4 border-t border-gray-200 flex space-x-4">
-                <button
-                    onClick={makeUnpaid}
-                    className="flex-1 bg-yellow-400 text-black py-3 rounded-md font-medium hover:bg-yellow-500 transition-colors"
-                >
-                    Make Unpaid
-                </button>
-                <button
-                    onClick={makePaid}
-                    className="flex-1 bg-yellow-400 text-black py-3 rounded-md font-medium hover:bg-yellow-500 transition-colors"
-                >
-                    Make Paid
-                </button>
+            {/* Main Content */}
+            <div className="flex-1 px-4 py-8 max-w-4xl mx-auto w-full">
+                {/* Stats Card */}
+                <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
+                    <div className="grid grid-cols-2 gap-6">
+                        <div>
+                            <p className="text-gray-500 text-sm mb-1">Total Amount</p>
+                            <p className="text-2xl font-semibold text-gray-900">
+                                ${(data.totalAmount / 100).toFixed(2)}
+                            </p>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-gray-500 text-sm mb-1">Remaining to Pay</p>
+                            <p className="text-2xl font-semibold text-gray-900">
+                                ${(data.totalAmount / 100).toFixed(2)}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Users List */}
+                <div className="space-y-4">
+                    {data.users.map((user) => (
+                        <div key={user.id}
+                             className="bg-white rounded-xl shadow-sm p-4 flex items-center justify-between hover:shadow-md transition-shadow">
+                            <div className="flex items-center">
+                                <input
+                                    type="checkbox"
+                                    checked={selectedUsers.includes(user.id)}
+                                    onChange={() => handleUserToggle(user.id)}
+                                    className="w-5 h-5 mr-4 rounded border-gray-300"
+                                />
+                                <div
+                                    className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mr-4">
+                                    <img
+                                        src={user.photo_url}
+                                        alt={user.full_name}
+                                        className="w-full h-full rounded-full object-cover"
+                                    />
+                                </div>
+                                <div>
+                                    <h3 className="font-medium text-gray-900">{user.full_name}</h3>
+                                    <p className="text-gray-500 text-sm">
+                                        Status: <span
+                                        className={user.status === 'PAID' ? 'text-green-600' : 'text-red-600'}>
+                                            {user.status}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="text-right">
+                                <p className="font-semibold text-gray-900">
+                                    ${(user.amount / 100).toFixed(2)}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="sticky bottom-0 py-4">
+                <div className="flex gap-4 max-w-150 mx-auto">
+                    <button
+                        onClick={() => handleStatusUpdate('PAID')}
+                        className="flex-1 bg-green-500 text-white py-4 rounded-xl font-medium hover:bg-green-600 transition-colors"
+                        disabled={selectedUsers.length === 0}
+                    >
+                        Make Unpaid
+                    </button>
+                    <button
+                        onClick={() => handleStatusUpdate('UNPAID')}
+                        className="flex-1 bg-red-500 text-white py-4 rounded-xl font-medium hover:bg-red-600 transition-colors"
+                        disabled={selectedUsers.length === 0}
+                    >
+                        Make Paid
+                    </button>
+                </div>
             </div>
         </div>
     );

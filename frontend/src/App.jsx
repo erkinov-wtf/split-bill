@@ -42,8 +42,9 @@ function App() {
             <Route path="/empty-new-room" element={<PrivateRoute><Layout><EmptyRoomPage/></Layout></PrivateRoute>}/>
 
 
-            <Route path="/rooms/:roomId/new-expense" element={<PrivateRoute><Layout><CreateExpense/></Layout></PrivateRoute>}/>
             <Route path="/rooms/:roomId" element={<PrivateRoute><Layout><RoomPage/></Layout></PrivateRoute>}/>
+            <Route path="/rooms/:roomId/new-expense" element={<PrivateRoute><Layout><CreateExpense/></Layout></PrivateRoute>}/>
+            <Route path="/rooms/:roomId/product/:productId" element={<PrivateRoute><Layout><UpdateUserStatus/></Layout></PrivateRoute>}/>
         </Routes>
     );
 }
