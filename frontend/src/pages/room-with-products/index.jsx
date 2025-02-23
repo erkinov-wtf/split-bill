@@ -14,9 +14,17 @@ const RoomWithProducts = ({roomData}) => {
     const getRemainingBalance = (roomData) => {
         if (!roomData || !roomData.room_products) return 0;
 
-        return roomData.room_products.reduce((acc, product) => {
-            const hasUnpaid = product.user_products.some(userProduct => userProduct.status === "UNPAID");
-            return hasUnpaid ? acc + product.price : acc;
+        return roomData.room_products.reduce((totalBalance, product) => {
+            const totalUsers = product.user_products.length;
+            if (totalUsers === 0) return totalBalance;
+
+            const costPerUser = product.price / totalUsers;
+
+            const unpaidAmount = product.user_products.reduce((productBalance, userProduct) => {
+                return userProduct.status === "UNPAID" ? productBalance + costPerUser : productBalance;
+            }, 0);
+
+            return totalBalance + unpaidAmount;
         }, 0);
     };
 
@@ -104,8 +112,6 @@ const RoomWithProducts = ({roomData}) => {
                                 </div>
                                 <div>
                                     <h3 className="font-medium text-gray-900">{product.name}</h3>
-                                    <p className="text-gray-500 text-sm">Added
-                                        by {product.creator_name || 'Anonymous'}</p>
                                 </div>
                             </div>
                             <div className="text-right">
