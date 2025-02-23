@@ -79,6 +79,10 @@ components_manager:
             path: /v1/products
             method: GET
             task_processor: main-task-processor
+        handler-v1-product-bulk-update:
+            path: /v1/products/bulk-update
+            method: PUT
+            task_processor: main-task-processor
 
         # rooms endpoints
         handler-v1-create-room:

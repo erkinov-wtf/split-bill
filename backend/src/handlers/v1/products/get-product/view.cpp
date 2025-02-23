@@ -59,8 +59,8 @@ class GetProduct final : public userver::server::handlers::HttpHandlerBase {
         userver::storages::postgres::ClusterHostType::kSlave,
         "SELECT p.* FROM products p "
         "JOIN rooms r ON p.room_id = r.id "
-        "WHERE p.id = $1 AND r.user_id = $2",
-        product_id, session->user_id);
+        "WHERE p.id = $1",
+        product_id);
 
     if (result.IsEmpty()) {
       request.SetResponseStatus(userver::server::http::HttpStatus::kNotFound);
