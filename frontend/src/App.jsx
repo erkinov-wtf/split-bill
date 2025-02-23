@@ -34,14 +34,10 @@ function App() {
 
             {/* Protected Routes */}
             <Route path="*" element={<PrivateRoute><Layout><Home/></Layout></PrivateRoute>}/>
-            <Route path="/join" element={<PrivateRoute><Layout><JoinRoomPage/></Layout></PrivateRoute>}/>
-            <Route path="/create" element={<PrivateRoute><Layout><CreateRoom/></Layout></PrivateRoute>}/>
+
             <Route path="/rooms" element={<PrivateRoute><Layout><UsersRoomPage/></Layout></PrivateRoute>}/>
-
-            <Route path="/update-status" element={<PrivateRoute><Layout><UpdateUserStatus/></Layout></PrivateRoute>}/>
-            <Route path="/empty-new-room" element={<PrivateRoute><Layout><EmptyRoomPage/></Layout></PrivateRoute>}/>
-
-
+            <Route path="/rooms/join" element={<PrivateRoute><Layout><JoinRoomPage/></Layout></PrivateRoute>}/>
+            <Route path="/rooms/create" element={<PrivateRoute><Layout><CreateRoom/></Layout></PrivateRoute>}/>
             <Route path="/rooms/:roomId" element={<PrivateRoute><Layout><RoomPage/></Layout></PrivateRoute>}/>
             <Route path="/rooms/:roomId/new-expense" element={<PrivateRoute><Layout><CreateExpense/></Layout></PrivateRoute>}/>
             <Route path="/rooms/:roomId/product/:productId" element={<PrivateRoute><Layout><UpdateUserStatus/></Layout></PrivateRoute>}/>
