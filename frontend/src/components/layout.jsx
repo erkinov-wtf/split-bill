@@ -1,44 +1,57 @@
 import React from "react";
 import {Divider, Typography} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
-const UserInfo = () => (
-    <div className="bg-white p-4 rounded-lg shadow sticky top-0">
-        <div className="flex flex-col items-center text-center">
-            <img
-                src="/profile.jpg"
-                alt="User"
-                className="w-24 h-24 mb-2 border-4 border-gray-300 rounded-full mx-auto"
-            />
-            <h2 className="text-lg font-semibold text-gray-900">Rakhmatilla Erkinov</h2>
-            <p className="text-gray-600">Student at New Uzbekistan University</p>
-            <p className="text-gray-600 mb-2">Tashkent Region</p>
-            <p className="font-medium text-gray-900">OY STARTECH LLC</p>
+const UserInfo = () => {
+    const navigate = useNavigate();
+
+    const logout = () => {
+        localStorage.removeItem("session_id");
+        navigate("/login");
+    };
+
+    return (
+        <div className="bg-white p-4 rounded-lg shadow sticky top-0">
+            <div className="flex flex-col items-center text-center">
+                <img
+                    src="/profile.jpg"
+                    alt="User"
+                    className="w-24 h-24 mb-2 border-4 border-gray-300 rounded-full mx-auto"
+                />
+                <h2 className="text-lg font-semibold text-gray-900">Rakhmatilla Erkinov</h2>
+                <p className="text-gray-600">Student at New Uzbekistan University</p>
+                <p className="text-gray-600 mb-2">Tashkent Region</p>
+                <p className="font-medium text-gray-900">OY STARTECH LLC</p>
+            </div>
+            <hr className="my-3 border-gray-300" />
+            <div className="flex justify-between text-gray-600 text-sm">
+                <span>Profile viewers</span>
+                <span className="text-blue-500 font-semibold">13</span>
+            </div>
+            <button
+                onClick={logout}
+                className="mt-2 w-full py-2 text-sm font-semibold bg-orange-500 text-white rounded hover:bg-orange-600"
+            >
+                Logout
+            </button>
+            <hr className="my-3 border-gray-300" />
+            <div className="space-y-2 text-gray-600">
+                <div className="flex items-center cursor-pointer hover:text-gray-900">
+                    <span className="mr-2">📑</span> Saved items
+                </div>
+                <div className="flex items-center cursor-pointer hover:text-gray-900">
+                    <span className="mr-2">👥</span> Groups
+                </div>
+                <div className="flex items-center cursor-pointer hover:text-gray-900">
+                    <span className="mr-2">📰</span> Newsletters
+                </div>
+                <div className="flex items-center cursor-pointer hover:text-gray-900">
+                    <span className="mr-2">📅</span> Events
+                </div>
+            </div>
         </div>
-        <hr className="my-3 border-gray-300" />
-        <div className="flex justify-between text-gray-600 text-sm">
-            <span>Profile viewers</span>
-            <span className="text-blue-500 font-semibold">13</span>
-        </div>
-        <button className="mt-2 w-full py-2 text-sm font-semibold bg-orange-500 text-white rounded hover:bg-orange-600">
-            Reactivate
-        </button>
-        <hr className="my-3 border-gray-300" />
-        <div className="space-y-2 text-gray-600">
-            <div className="flex items-center cursor-pointer hover:text-gray-900">
-                <span className="mr-2">📑</span> Saved items
-            </div>
-            <div className="flex items-center cursor-pointer hover:text-gray-900">
-                <span className="mr-2">👥</span> Groups
-            </div>
-            <div className="flex items-center cursor-pointer hover:text-gray-900">
-                <span className="mr-2">📰</span> Newsletters
-            </div>
-            <div className="flex items-center cursor-pointer hover:text-gray-900">
-                <span className="mr-2">📅</span> Events
-            </div>
-        </div>
-    </div>
-);
+    );
+};
 
 const ExtraContent = () => (
     <div className="bg-white text-black p-4 rounded-lg shadow sticky top-0">
