@@ -1,27 +1,83 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Divider, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
 const UserInfo = () => {
+    const [userData, setUserData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const sessionId = localStorage.getItem("session_id");
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                setIsLoading(true);
+                const response = await fetch("https://split-bill.steamfest.live/me", {
+                    method: "GET",
+                    headers: {
+                        "Content-type": "application/json",
+                        "X-Ya-User-Ticket": sessionId,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+                const data = await response.json();
+                setUserData(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     const logout = () => {
         localStorage.removeItem("session_id");
         navigate("/login");
     };
 
+    if (isLoading) {
+        return (
+            <div className="bg-white p-4 rounded-lg shadow sticky top-0">
+                <div className="flex flex-col items-center text-center">
+                    <div className="w-24 h-24 mb-2 rounded-full bg-gray-200 animate-pulse" />
+                    <div className="h-5 w-40 bg-gray-200 rounded animate-pulse mb-2" />
+                    <div className="h-4 w-32 bg-gray-200 rounded animate-pulse" />
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="bg-white p-4 rounded-lg shadow sticky top-0">
+                <div className="text-red-500 text-center">
+                    Failed to load user data. Please try again later.
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="bg-white p-4 rounded-lg shadow sticky top-0">
             <div className="flex flex-col items-center text-center">
                 <img
-                    src="/profile.jpg"
-                    alt="User"
+                    src={userData?.photo_url || '/default-profile.jpg'}
+                    alt={userData?.full_name || 'User'}
                     className="w-24 h-24 mb-2 border-4 border-gray-300 rounded-full mx-auto"
+                    onError={(e) => {
+                        e.target.src = '/default-profile.jpg';
+                    }}
                 />
-                <h2 className="text-lg font-semibold text-gray-900">Rakhmatilla Erkinov</h2>
+                <h2 className="text-lg font-semibold text-gray-900">
+                    {userData?.full_name || 'Anonymous User'}
+                </h2>
                 <p className="text-gray-600">Student at New Uzbekistan University</p>
-                <p className="text-gray-600 mb-2">Tashkent Region</p>
-                <p className="font-medium text-gray-900">OY STARTECH LLC</p>
+                <p className="text-gray-600 mb-2">Tashkent</p>
             </div>
             <hr className="my-3 border-gray-300" />
             <div className="flex justify-between text-gray-600 text-sm">
@@ -54,50 +110,64 @@ const UserInfo = () => {
 };
 
 const ExtraContent = () => (
-    <div className="bg-white text-black p-4 rounded-lg shadow sticky top-0">
-        <Typography variant="h6" className="font-semibold">Spending</Typography>
-        <div className="flex justify-between items-center mt-2">
-            <Typography variant="body2" className="text-gray-600">You Spent:</Typography>
-            <Typography variant="h6" className="font-bold">$2,272.52</Typography>
-        </div>
-        <div className="flex justify-between items-center">
-            <Typography variant="body2" className="text-gray-600">Total Receivable:</Typography>
-            <Typography variant="h6" className="text-green-600 font-bold">+ $938.83</Typography>
-        </div>
-        <Divider className="my-3 border-gray-300" />
-        <Typography variant="h6" className="font-semibold">Spending Breakdown</Typography>
-        <div className="grid grid-cols-2 gap-3 mt-2">
-            <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-blue-500 rounded-full"></div>
-                <Typography variant="body2">Entertainment</Typography>
-            </div>
-            <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-yellow-500 rounded-full"></div>
-                <Typography variant="body2">Shopping</Typography>
-            </div>
-            <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-orange-500 rounded-full"></div>
-                <Typography variant="body2">Dining</Typography>
-            </div>
-            <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-blue-400 rounded-full"></div>
-                <Typography variant="body2">Uncategory</Typography>
-            </div>
-            <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-teal-400 rounded-full"></div>
-                <Typography variant="body2">Transportation</Typography>
-            </div>
-            <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-green-500 rounded-full"></div>
-                <Typography variant="body2">Others</Typography>
+    <div className="bg-white rounded-xl shadow-lg p-6 sticky top-4 space-y-2">
+        {/* Spending Overview Section */}
+        <div className="space-y-4">
+            <h2 className="text-xl font-bold text-gray-800">Spending</h2>
+            <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                    <span className="text-gray-600">You Spent:</span>
+                    <span className="text-xl font-bold text-gray-800">$2,272.52</span>
+                </div>
+                <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Total Receivable:</span>
+                    <span className="text-xl font-bold text-emerald-600">+ $938.83</span>
+                </div>
             </div>
         </div>
-        <Divider className="my-3 border-gray-300" />
-        <Typography variant="h6" className="font-semibold">Frequent Spend</Typography>
-        <div className="bg-gray-100 p-4 rounded-lg mt-2">
-            <Typography variant="body2">Bateaux Parisiens 3x - $322.50</Typography>
-            <Typography variant="body2">Carrousel du Louvre 3x - $268.24</Typography>
-            <Typography variant="body2">L'Ami Louis 2x - $260.00</Typography>
+
+        {/* Divider */}
+        <div className="h-px bg-gray-200" />
+
+        {/* Spending Breakdown Section */}
+        <div className="space-y-5">
+            <h2 className="text-xl font-bold text-gray-800">Spending Breakdown</h2>
+            <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                    <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
+                    <span className="text-sm text-gray-700">Shopping</span>
+                </div>
+                <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                    <div className="w-4 h-4 bg-orange-500 rounded-full"></div>
+                    <span className="text-sm text-gray-700">Dining</span>
+                </div>
+                <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                    <div className="w-4 h-4 bg-teal-400 rounded-full"></div>
+                    <span className="text-sm text-gray-700">Games</span>
+                </div>
+                <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                    <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                    <span className="text-sm text-gray-700">Others</span>
+                </div>
+            </div>
+        </div>
+
+        {/* Divider */}
+        <div className="h-px bg-gray-200" />
+
+        {/* Frequent Spend Section */}
+        <div className="space-y-5">
+            <h2 className="text-xl font-bold text-gray-800">Frequent Spend</h2>
+            <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                <div className="flex justify-between items-center">
+                    <span className="text-gray-700">Bateaux Parisiens</span>
+                    <span className="text-sm font-medium text-gray-600">3x - $322.50</span>
+                </div>
+                <div className="flex justify-between items-center">
+                    <span className="text-gray-700">Carrousel Louvre</span>
+                    <span className="text-sm font-medium text-gray-600">3x - $268.24</span>
+                </div>
+            </div>
         </div>
     </div>
 );
