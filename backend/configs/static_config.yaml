@@ -61,6 +61,10 @@ components_manager:
             path: /login
             method: POST
             task_processor: main-task-processor
+        handler-user-info:
+            path: /me
+            method: GET
+            task_processor: main-task-processor
 
         # products endpoints
         handler-v1-add-product:
