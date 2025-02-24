@@ -34,7 +34,7 @@ function Login() {
                 const data = await response.json();
                 localStorage.setItem("session_id", data.id);
 
-                navigate("/rooms/join");
+                navigate("/rooms");
             } else {
                 setErrorMessage("Incorrect login credentials. Please try again.");
             }
