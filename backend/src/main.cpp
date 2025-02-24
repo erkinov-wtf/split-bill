@@ -9,6 +9,7 @@
 
 #include "handlers/v1/register/view.hpp"
 #include "handlers/v1/login/view.hpp"
+#include "handlers/v1/user-info/view.hpp"
 
 #include "handlers/v1/products/add-product/view.hpp"
 #include "handlers/v1/products/get-product/view.hpp"
@@ -43,6 +44,7 @@ int main(int argc, char* argv[]) {
     // user auth
     split_bill::AppendRegisterUser(component_list);
     split_bill::AppendLoginUser(component_list);
+    split_bill::AppendUserInfo(component_list);
 
     // products endpoints
     split_bill::AppendAddProduct(component_list);

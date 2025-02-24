@@ -29,6 +29,9 @@ add_library(${PROJECT_NAME}_objs OBJECT
         src/models/session.hpp
         src/models/user.hpp
 
+        src/models/user-info.hpp
+        src/models/user-info.hpp
+
         src/models/room.hpp
         src/models/room.cpp
         src/models/detailed-room.hpp
@@ -48,6 +51,9 @@ add_library(${PROJECT_NAME}_objs OBJECT
 
         src/handlers/v1/login/view.hpp
         src/handlers/v1/login/view.cpp
+
+        src/handlers/v1/user-info/view.hpp
+        src/handlers/v1/user-info/view.cpp
 
 
         ## Product Handlers
