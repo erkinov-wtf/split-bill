@@ -36,7 +36,6 @@ const ParticipantsPage = () => {
     if (error) return <div className="text-center text-red-500 py-10">{error}</div>;
 
     return (
-
         <div className="max-w-3xl mx-auto p-6">
             <div className="flex items-center justify-between mb-6">
                 <button
