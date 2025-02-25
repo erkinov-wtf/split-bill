@@ -49,9 +49,10 @@ function Login() {
                 <h3 className="text-4xl font-bold text-gray-800">Login</h3>
                 <p className="text-gray-600 mb-6">Welcome back!</p>
 
-                <label className="block text-gray-700 font-semibold">USERAME</label>
+                <label htmlFor="username" className="block text-gray-700 font-semibold">USERNAME</label>
                 <div className="relative mb-4">
                     <input
+                        id="username"
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -60,9 +61,10 @@ function Login() {
                     />
                 </div>
 
-                <label className="block text-gray-700 font-semibold">PASSWORD</label>
+                <label htmlFor="password" className="block text-gray-700 font-semibold">PASSWORD</label>
                 <div className="relative mb-6">
                     <input
+                        id="password"
                         type={passwordVisible ? "text" : "password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -70,6 +72,7 @@ function Login() {
                         className="w-full p-2 border rounded-lg pr-10 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                     <Eye
+                        data-testid="eye-icon"
                         className="absolute right-3 top-3 text-gray-500 cursor-pointer"
                         onClick={() => setPasswordVisible(!passwordVisible)}
                     />
